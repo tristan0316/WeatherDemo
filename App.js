@@ -68,42 +68,40 @@ const Stack = createNativeStackNavigator();
 let weatherdata= null;
 let weatherdata2= null;
 
-
-const getWeather = async () => {
+const getweather = async () => {
   try {
+    console.log("fetching")
     const response = await fetch(
-      'https://reactnative.dev/movies.json'
+      'https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=7222ca83015c255ee7767369262fc10f'
     );
-    const json = await response.json();
-    return json.movies;
+    console.log("fetch completed")
+    const weatherdata = await response.json();
+    return weatherdata;
+
   } catch (error) {
-    console.error(error);
+    console.log("fetch fail");
   }
 };
 
+getweather();
 
-asyncfun = async ()=> {
-  console.log("async")
-  const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=7222ca83015c255ee7767369262fc10f`)
-  console.log("data got !")
-  const response2 = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Beijing,china&APPID=7222ca83015c255ee7767369262fc10f`)
-  weatherdata = await response.json();
-  weatherdata2 = await response2.json();
-  console.log(weatherdata)
-  console.log("--------------------------------------------------------------------")
-  
-  const element = <Text index={0} color="yellow" >This is a a Text element with 2 props</Text>
-  console.log("Prop1: "+ element.props.index)
-  console.log("ProP2: "+ element.props.color)
-  console.log("text: "+ element.props.children)
-  console.log(DEFAULT_EVENT_NAME);
-  console.log(element.type)
 
-}
 
-asyncfun(); 
 
-//LUCY : 11101050019
+
+// asyncfun = async ()=> {
+//   console.log("async")
+//   const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=7222ca83015c255ee7767369262fc10f')
+//   console.log("data got !")
+//   const response2 = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Beijing,china&APPID=7222ca83015c255ee7767369262fc10f`)
+//   weatherdata = await response.json();
+//   weatherdata2 = await response2.json();
+//   console.log(weatherdata)
+
+// }
+
+// asyncfun(); 
+
 
 
 
