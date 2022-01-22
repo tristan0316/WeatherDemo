@@ -74,8 +74,15 @@ const getweather = async () => {
     const response = await fetch(
       'https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=7222ca83015c255ee7767369262fc10f'
     );
+    const response2 = await fetch(
+      'https://api.openweathermap.org/data/2.5/weather?q=Beijing,china&APPID=7222ca83015c255ee7767369262fc10f'
+    );
     console.log("fetch completed")
-    const weatherdata = await response.json();
+    weatherdata = await response.json();
+    weatherdata2 = await response2.json();
+    console.log(weatherdata)
+    console.log("------")
+    console.log(weatherdata2)
     return weatherdata;
 
   } catch (error) {
