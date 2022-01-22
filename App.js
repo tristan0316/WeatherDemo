@@ -8,31 +8,7 @@ import Weather from './weather'
 import { NativeModules } from 'react-native';
 import CalendarModule from './CalendarModule';
 
-
-
-
-// const onSubmit = async () => {
-//   try {
-//     const eventId = await CalendarModule.createCalendarEvent(
-//       'Party',
-//       'My House');
-//     console.log(`Created a new event with id ${eventId}`);
-//   } 
-//   catch (e) {
-//     console.error(e);
-//   }
-// };
-
-// onSubmit()
-
-
-// const { DEFAULT_EVENT_NAME } = CalendarModule.getConstants();
-
-
-
-
-
-// Custome theme
+// Custome themes
 const DayTheme = {
   //custom prop
   id: 1,
@@ -68,6 +44,7 @@ const Stack = createNativeStackNavigator();
 let weatherdata= null;
 let weatherdata2= null;
 
+//get weather data from API
 const getweather = async () => {
   try {
     console.log("fetching")
@@ -92,49 +69,26 @@ const getweather = async () => {
 
 getweather();
 
-
-
-
-
-// asyncfun = async ()=> {
-//   console.log("async")
-//   const response = await fetch('https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=7222ca83015c255ee7767369262fc10f')
-//   console.log("data got !")
-//   const response2 = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Beijing,china&APPID=7222ca83015c255ee7767369262fc10f`)
-//   weatherdata = await response.json();
-//   weatherdata2 = await response2.json();
-//   console.log(weatherdata)
-
-// }
-
-// asyncfun(); 
-
-
-
-
-
 function App() {  
-  
-
   //Home page 
   function HomeScreen({ navigation }) {
 
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Home Screen</Text>
-        <Button
-          title="Go to Weather Page"
-          onPress={() => {
-            navigation.navigate('Weather', {itemId: 86, otherParam: 'anything you want here'});
-          }} 
-        />
-      </View>
+      <><Button
+        title="Change Theme"
+        onPress={() => { changetheme(); } } />
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Button
+            title="Go to Weather Page"
+            onPress={() => {
+              navigation.navigate('Weather', { itemId: 86, otherParam: 'anything you want here' });
+            } } />
+        </View></>
     );
   }
 
   
   function WeatherScreen({ route, navigationn, data}) {
-
     if (weatherdata!=null&& weatherdata2!=null){
         return (
           <><Button
@@ -142,8 +96,8 @@ function App() {
           onPress={() => {changetheme();} } />
 
           <View style={{ flex: 2, flexDirection: "column" }}>
-            <Weather day={weatherdata.name} high={Math.round(weatherdata.main.temp_max-272.15)} low={Math.round(weatherdata.main.temp_min-272.15)} img={usetheme.img}></Weather>
-            <Weather day={weatherdata2.name} high={Math.round(weatherdata2.main.temp_max-272.15)} low={Math.round(weatherdata2.main.temp_min-272.15)} img={usetheme.img}></Weather>
+            <Weather cityname={weatherdata.name} high={Math.round(weatherdata.main.temp_max-272.15)} low={Math.round(weatherdata.main.temp_min-272.15)} img={usetheme.img}></Weather>
+            <Weather cityname={weatherdata2.name} high={Math.round(weatherdata2.main.temp_max-272.15)} low={Math.round(weatherdata2.main.temp_min-272.15)} img={usetheme.img}></Weather>
           </View></>
       );
       }
@@ -151,17 +105,17 @@ function App() {
         return(
           <><Button
             title="Change Theme"
-            onPress={() => { changetheme(); } } /><Weather day={"Tuesday"} high={"22"} low={"14"} img={usetheme.img}></Weather></>
+            onPress={() => { changetheme(); } } />
+            <Text>Loading...</Text></>
         );
 
       }
     
   }
 
-  
-
   const [usetheme, settheme] = useState( NightTheme);
   
+  //change theme
   function changetheme(){
     
     if (usetheme.id==1){
@@ -175,7 +129,7 @@ function App() {
   return (
     <NavigationContainer  theme={usetheme}>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Home Screen" component={HomeScreen} />
         <Stack.Screen name="Weather" component={WeatherScreen} />
       </Stack.Navigator>
     </NavigationContainer>

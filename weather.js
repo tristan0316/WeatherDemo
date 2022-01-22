@@ -5,55 +5,16 @@ import Geolocation from 'react-native-geolocation-service';
 
 
 export class Weather extends Component {
-
-    state ={
-        lat:null,
-        lon:null,
-    };
-
-    componentDidMount(){
-        this.getLocation();
-    }
-
-    getLocation = async () =>{
-        const granted =await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,);
-        if (granted== PermissionsAndroid.RESULTS.GRANTED){
-            Geolocation.getCurrentPosition ( 
-                (position)=> {
-                   // console.log(position);
-                    this.setState({
-                        lat:position.coords.latitude,
-                        lon:position.coords.longitude,
-                    })
-                    this.getWeather();
-                },
-                (error) => {
-               //     console.log(error.code,error.message);
-                },
-                {enableHighAccuracy: true, timeout:15000, maximumAGE:10000},
-            );
-        }
-    }
-
-    getWeather = async () => {
-        if (this.state.lat!=null){
-            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=7222ca83015c255ee7767369262fc10f`)
-            const data = await response.json();
-           // console.log (data.name)
-        }
-    };
       
   render() {
     return (
         <><Image style={styles.image} source={this.props.img} />
-        <><Text style={styles.day}>{this.props.day}</Text>
+        <><Text style={styles.day}>{this.props.cityname}</Text>
         <Text style={styles.temp}>{this.props.high}</Text>
         <Text style={styles.temp}>{this.props.low}</Text></></>
     );
   }
 }
-
-
 
 const styles = StyleSheet.create({
     scrollView: {
